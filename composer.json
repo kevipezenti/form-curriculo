@@ -1,0 +1,29 @@
+{
+    "name": "kevipezenti/formulario",
+    "description": "Formulário de envio de currículo",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kevipezenti"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4.15",
+        "phpmailer/phpmailer": "v6.3.0",
+        "wixel/gump": "v1.12.1",
+        "coffeecode/router": "1.0.7",
+        "coffeecode/datalayer": "1.1.7",
+        "league/plates": "3.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Form\\":"app"
+        },
+        "files": [
+            "config/Config.php"
+        ]
+    }
+    
+}
