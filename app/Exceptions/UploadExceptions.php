@@ -10,7 +10,7 @@ class UploadExceptions extends Exception
 
     private const MESSAGE = "Erro upload file";
 
-    private Throwable $th;
+    private ?Throwable $th;
 
     public function __construct(
         string $message,
@@ -19,7 +19,7 @@ class UploadExceptions extends Exception
     ) {
         parent::__construct($message, $code, $previous);
         $this->th = $previous;
-        $this->render();
+        $this->report();
     }
 
       /**

@@ -4,11 +4,12 @@ namespace Form\Exceptions;
 
 use Exception;
 use Throwable;
+use Form\Source\Monolog;
 
-class EmailExceptions extends Exception
+class FormExceptions extends Exception
 {
 
-    private const MESSAGE = "Erro send email";
+    private const MESSAGE = "Erro Data base";
 
     private ?Throwable $th;
 
@@ -22,13 +23,17 @@ class EmailExceptions extends Exception
         $this->report();
     }
 
-      /**
+    /**
      * Registrar o log.
      *
      * @return void
      */
     public function report()
     {
+        Monolog::ERROR($this->getMessage(), [
+            'code' => $this->getCode(),
+            'error' => $this->getPrevious()
+        ]);
     }
 
     /**
@@ -38,7 +43,7 @@ class EmailExceptions extends Exception
      */
     public function render(): void
     {
-        dump($this->messages);
+        dump($this->getMessage());
     }
 
     /**

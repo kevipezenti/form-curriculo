@@ -4,9 +4,9 @@ namespace Form\Models;
 
 use Form\Source\Models;
 
-class Form extends Models
+class Resume extends Models
 {
-    protected string $table = "form";
+    protected string $table = "resumes";
 
     protected array $required = [
         "name",
@@ -15,8 +15,12 @@ class Form extends Models
         "office",
         "schooling",
         "file",
-        "note",
-        "date",
-        "hour"
+        "date_occurred",
+        "hour_occurred"
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }

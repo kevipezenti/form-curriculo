@@ -6,10 +6,13 @@ namespace Form\Source;
 use Exception;
 use CoffeeCode\Uploader\Send as File;
 use Form\Exceptions\UploadExceptions;
+use stdClass;
 
 class Upload
 {
     protected File $file;
+
+    public stdClass $objStd;
 
     private const ALLOW_TYPES = [
         "application/pdf",
@@ -33,19 +36,32 @@ class Upload
             self::EXTENSIONS,
             false
         );
+
+        $this->objStd = new stdClass;
     }
 
     /**
-     * Pesirti o arquivo em disco e rotorna o path.
+     * Pesirti o arquivo em disco e rotorna um array de path.
+     *
+     * stdClass retornada:
+     *
+     * $obsolute - Caminho absoluto do arquivo;
+     * $relative - Caminho relativo do arquivo.
+     *
      *
      * @param array $file
      * @param string $newName
-     * @return string
+     * @return stdClass
      */
-    public function save(array $file, string $newName): string
+    public function save(array $file, string $newName): stdClass
     {
         try {
-            return $this->file->upload($file, $newName);
+            $pathFile = $this->file->upload($file, $newName);
+
+            $this->objStd->absolute = static::getAbsPath($pathFile);
+            $this->objStd->relative = static::getRelativePath($pathFile);
+
+            return $this->objStd;
         } catch (Exception $th) {
             throw new UploadExceptions(
                 "Falha ao salvar arquivo {$newName}",
@@ -53,5 +69,40 @@ class Upload
                 $th
             );
         }
+    }
+
+    /**
+     * Retorna o caminho absoluto do arquivo.
+     *
+     * @param string $pathFile
+     * @return string
+     */
+    public static function getAbsPath(string $pathFile): string
+    {
+        return realpath($pathFile);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $pathFile
+     * @return string
+     */
+    public static function getRelativePath(string $pathFile): string
+    {
+        return strstr(
+            static::getAbsPath($pathFile),
+            static::getDir()
+        );
+    }
+
+    /**
+     * Retorna o nome do doretório de upload.
+     *
+     * @return string
+     */
+    private static function getDir(): string
+    {
+        return strrchr(PATH_STORAGE, "/");
     }
 }

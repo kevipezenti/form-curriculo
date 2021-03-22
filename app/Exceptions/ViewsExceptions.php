@@ -10,7 +10,7 @@ class ViewsExceptions extends Exception
 
     private const MESSAGE = "Erro view engine";
 
-    private Throwable $th;
+    private ?Throwable $th;
 
     public function __construct(
         string $message,
@@ -19,7 +19,7 @@ class ViewsExceptions extends Exception
     ) {
         parent::__construct($message, $code, $previous);
         $this->th = $previous;
-        $this->render();
+        $this->report();
     }
 
       /**

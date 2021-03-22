@@ -8,6 +8,6 @@ $route->post('/', 'FormController:storage');
 
 $route->dispatch();
 
-if($route->error()){
+if ($route->error()) {
     echo $route->error();
 }

@@ -3,6 +3,7 @@
 namespace Form\Form\Files;
 
 use Form\Source\Upload;
+use stdClass;
 
 class Curriculum
 {
@@ -13,9 +14,9 @@ class Curriculum
 
     /**
      * @param array $file
-     * @return string
+     * @return array
      */
-    public static function store(array $file): string
+    public static function store(array $file): stdClass
     {
         $upload = new Upload(self::DIR_NAME);
 
