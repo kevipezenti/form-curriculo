@@ -2,7 +2,7 @@
 /dist
 /public/hot
 /public/storage
-/storage
+/storage/*
 /vendor
 /config/app/Config.php
 /.idea
