@@ -16,7 +16,8 @@ class Resume extends Models
         "schooling",
         "file",
         "date_occurred",
-        "hour_occurred"
+        "hour_occurred",
+        "ip",
     ];
 
     public function __construct()

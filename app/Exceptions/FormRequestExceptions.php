@@ -4,6 +4,7 @@ namespace Form\Exceptions;
 
 use Exception;
 use Throwable;
+use Form\Source\Monolog;
 
 class FormRequestExceptions extends Exception
 {
@@ -32,6 +33,10 @@ class FormRequestExceptions extends Exception
      */
     public function report()
     {
+        Monolog::ERROR($this->getMessage(), [
+            'code' => $this->getCode(),
+            'error' => $this->getPrevious()
+        ]);
     }
 
     /**
@@ -45,7 +50,7 @@ class FormRequestExceptions extends Exception
     }
 
     /**
-     * Retorna as mensagens de erros dos camos.
+     * Retorna as mensagens de erros dos campos.
      *
      * @return array
      */

@@ -22,6 +22,7 @@ class Resume
         $resume->note = $data['note'];
         $resume->date_occurred = $data['date'];
         $resume->hour_occurred = $data['hour'];
+        $resume->ip = static::getClientIP();
 
         $id = $resume->save();
 
@@ -34,5 +35,31 @@ class Resume
         }
 
         return $id;
+    }
+
+    /**
+     * Tenta retorna o IP do cliente.
+     *
+     * @return string
+     */
+    public static function getClientIP(): string
+    {
+        $ipaddress = 'UNKNOWN';
+
+        if ($_SERVER['HTTP_CLIENT_IP']) {
+            $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+        } elseif ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif ($_SERVER['HTTP_X_FORWARDED']) {
+            $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+        } elseif ($_SERVER['HTTP_FORWARDED_FOR']) {
+            $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        } elseif ($_SERVER['HTTP_FORWARDED']) {
+            $ipaddress = $_SERVER['HTTP_FORWARDED'];
+        } elseif ($_SERVER['REMOTE_ADDR']) {
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ipaddress;
     }
 }

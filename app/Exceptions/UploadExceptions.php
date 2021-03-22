@@ -4,6 +4,7 @@ namespace Form\Exceptions;
 
 use Exception;
 use Throwable;
+use Form\Source\Monolog;
 
 class UploadExceptions extends Exception
 {
@@ -29,6 +30,10 @@ class UploadExceptions extends Exception
      */
     public function report()
     {
+        Monolog::ERROR($this->getMessage(), [
+            'code' => $this->getCode(),
+            'error' => $this->getPrevious()
+        ]);
     }
 
     /**
@@ -39,16 +44,6 @@ class UploadExceptions extends Exception
     public function render(): void
     {
         dump($this->messages);
-    }
-
-    /**
-     * Retorna as mensagens de erros dos camos.
-     *
-     * @return array
-     */
-    public function getFieldsErrors(): array
-    {
-        return $this->messages;
     }
 
     public function __toString(): string
